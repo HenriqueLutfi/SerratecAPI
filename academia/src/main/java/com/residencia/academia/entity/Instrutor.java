@@ -39,7 +39,7 @@ public class Instrutor {
 	private Integer titulacao;
 
 	@OneToMany(mappedBy = "instrutor")
-//	@JsonIgnore
+	@JsonIgnore
 	//@JsonManagedReference
 	private List<Turma> turmaList;
 

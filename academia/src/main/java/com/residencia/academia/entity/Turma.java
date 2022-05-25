@@ -45,7 +45,7 @@ public class Turma {
 	
 	@ManyToOne
 //	@JsonBackReference
-//	@JsonIgnore
+	//@JsonIgnore
 	@JoinColumn(name="id_atividade", referencedColumnName="id_atividade")
 	private Atividade atividade;
 

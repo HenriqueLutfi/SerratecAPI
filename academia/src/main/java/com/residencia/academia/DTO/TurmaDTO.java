@@ -11,24 +11,24 @@ public class TurmaDTO {
 	private Integer duracaoTurma;
 	private Date dataInicio;
 	private Date dataFim;
-	private Instrutor instrutorDTO;
+	private Instrutor instrutor;
 	private Atividade atividade;
 
 	
+	public Instrutor getInstrutor() {
+		return instrutor;
+	}
+
+	public void setInstrutor(Instrutor instrutor) {
+		this.instrutor = instrutor;
+	}
+
 	public Atividade getAtividade() {
 		return atividade;
 	}
 
 	public void setAtividade(Atividade atividade) {
 		this.atividade = atividade;
-	}
-
-	public Instrutor getInstrutorDTO() {
-		return instrutorDTO;
-	}
-
-	public void setInstrutorDTO(Instrutor instrutorDTO) {
-		this.instrutorDTO = instrutorDTO;
 	}
 
 	public Integer getIdTurma() {

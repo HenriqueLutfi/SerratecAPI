@@ -59,7 +59,8 @@ public class TurmaService {
 		turmaDTO.setDuracaoTurma(turma.getDuracaoTurma());
 		turmaDTO.setHorarioTurma(turma.getHorarioTurma());
 		turmaDTO.setIdTurma(turma.getIdTurma());
-		turmaDTO.setInstrutorDTO(turma.getInstrutor());
+		turmaDTO.setInstrutor(turma.getInstrutor());
+		turmaDTO.setAtividade(turma.getAtividade());
 		return turmaDTO;
 	}
 
@@ -70,7 +71,8 @@ public class TurmaService {
 		turma.setDuracaoTurma(turmaDTO.getDuracaoTurma());
 		turma.setHorarioTurma(turmaDTO.getHorarioTurma());
 		turma.setIdTurma(turmaDTO.getIdTurma());
-		turma.setInstrutor(turmaDTO.getInstrutorDTO());
+		turma.setInstrutor(turmaDTO.getInstrutor());
+		turma.setAtividade(turmaDTO.getAtividade());
 		return turma;
 	}
 
