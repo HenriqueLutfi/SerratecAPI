@@ -1,12 +1,13 @@
 package com.residencia.academia.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.residencia.academia.DTO.InstrutorDTO;
 import com.residencia.academia.DTO.TurmaDTO;
+import com.residencia.academia.entity.Instrutor;
 import com.residencia.academia.entity.Turma;
 import com.residencia.academia.repository.TurmaRepository;
 
@@ -14,6 +15,12 @@ import com.residencia.academia.repository.TurmaRepository;
 public class TurmaService {
 	@Autowired
 	TurmaRepository turmaRepository;
+	
+	@Autowired
+	private AtividadeService atividadeService;
+	
+	@Autowired
+	InstrutorService instrutorService;
 
 	public List<Turma> findAllTurma() {
 		return turmaRepository.findAll();
@@ -39,6 +46,8 @@ public class TurmaService {
 	public TurmaDTO saveTurmaDTO(TurmaDTO turmaDTO) {
 		Turma turma = new Turma();
 		turma = converterDTOParaEntidade(turmaDTO);
+//		Instrutor instrutor = instrutorService.findInstrutorById(turmaDTO.getInstrutorDTO().getIdInstrutor());
+//		turma.setInstrutor(instrutor);
 		saveTurma(turma);
 		turmaDTO = converterEntidadeParaDTO(turma);
 		return turmaDTO;
@@ -59,8 +68,10 @@ public class TurmaService {
 		turmaDTO.setDuracaoTurma(turma.getDuracaoTurma());
 		turmaDTO.setHorarioTurma(turma.getHorarioTurma());
 		turmaDTO.setIdTurma(turma.getIdTurma());
-		turmaDTO.setInstrutor(turma.getInstrutor());
-		turmaDTO.setAtividade(turma.getAtividade());
+		InstrutorDTO instrutor = instrutorService.findInstrutorDTOById(turma.getInstrutor().getIdInstrutor());
+		//turmaDTO.setInstrutorDTO(instrutorService.converterEntidadeParaDTO(turma.getInstrutor()));
+		turmaDTO.setInstrutorDTO(instrutor);
+		//turmaDTO.setAtividadeDTO(turma.getAtividade());
 		return turmaDTO;
 	}
 
@@ -71,8 +82,10 @@ public class TurmaService {
 		turma.setDuracaoTurma(turmaDTO.getDuracaoTurma());
 		turma.setHorarioTurma(turmaDTO.getHorarioTurma());
 		turma.setIdTurma(turmaDTO.getIdTurma());
-		turma.setInstrutor(turmaDTO.getInstrutor());
-		turma.setAtividade(turmaDTO.getAtividade());
+		//turma.setInstrutor(instrutorService.converterDTOParaEntidade(turmaDTO.getInstrutorDTO()));
+		Instrutor instrutor = instrutorService.findInstrutorById(turmaDTO.getInstrutorDTO().getIdInstrutor());
+		turma.setInstrutor(instrutor);
+		//turma.setAtividade(turmaDTO.getAtividadeDTO());
 		return turma;
 	}
 
