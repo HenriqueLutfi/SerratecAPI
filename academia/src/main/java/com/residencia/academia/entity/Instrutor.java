@@ -11,20 +11,21 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "instrutor")
-//@JsonIdentityInfo(
-//        generator = ObjectIdGenerators.PropertyGenerator.class,
-//        property = "idInstrutor")
+@JsonIdentityInfo(
+		generator = ObjectIdGenerators.PropertyGenerator.class,
+		property = "instrutorId")
 public class Instrutor {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_instrutor")
-	private Integer idInstrutor;
+	private Integer instrutorId;
 
 	@Column(name = "rg")
 	private Integer rg;
@@ -36,27 +37,19 @@ public class Instrutor {
 	private Date dataNascimento;
 
 	@Column(name = "titulacao")
-	private Integer titulacao;
-
-	@OneToMany(mappedBy = "instrutor")
-	@JsonIgnore
-	//@JsonManagedReference
+	private Integer titulacaoInstrutor;
+	
+	@OneToMany(mappedBy ="instrutor")
+//	@JsonIgnore
+//	@JsonManagedReference
 	private List<Turma> turmaList;
 
-	public List<Turma> getTurmaList() {
-		return turmaList;
+	public Integer getInstrutorId() {
+		return instrutorId;
 	}
 
-	public void setTurmaList(List<Turma> turmaList) {
-		this.turmaList = turmaList;
-	}
-
-	public Integer getIdInstrutor() {
-		return idInstrutor;
-	}
-
-	public void setIdInstrutor(Integer idInstrutor) {
-		this.idInstrutor = idInstrutor;
+	public void setInstrutorId(Integer instrutorId) {
+		this.instrutorId = instrutorId;
 	}
 
 	public Integer getRg() {
@@ -83,12 +76,21 @@ public class Instrutor {
 		this.dataNascimento = dataNascimento;
 	}
 
-	public Integer getTitulacao() {
-		return titulacao;
+	public Integer getTitulacaoInstrutor() {
+		return titulacaoInstrutor;
 	}
 
-	public void setTitulacao(Integer titulacao) {
-		this.titulacao = titulacao;
+	public void setTitulacaoInstrutor(Integer titulacaoInstrutor) {
+		this.titulacaoInstrutor = titulacaoInstrutor;
 	}
 
+	public List<Turma> getTurmaList() {
+		return turmaList;
+	}
+
+	public void setTurmaList(List<Turma> turmaList) {
+		this.turmaList = turmaList;
+	}
+
+	
 }

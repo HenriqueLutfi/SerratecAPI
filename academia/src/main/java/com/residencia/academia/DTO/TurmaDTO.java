@@ -1,41 +1,22 @@
-package com.residencia.academia.DTO;
+package com.residencia.academia.dto;
 
 import java.util.Date;
 
-import com.residencia.academia.entity.Atividade;
-import com.residencia.academia.entity.Instrutor;
-
 public class TurmaDTO {
-	private Integer idTurma;
+
+	private Integer turmaId;
 	private Date horarioTurma;
 	private Integer duracaoTurma;
 	private Date dataInicio;
 	private Date dataFim;
 	private InstrutorDTO instrutorDTO;
-	private AtividadeDTO atividadeDTO;
 
-	public InstrutorDTO getInstrutorDTO() {
-		return instrutorDTO;
+	public Integer getTurmaId() {
+		return turmaId;
 	}
 
-	public void setInstrutorDTO(InstrutorDTO instrutorDTO) {
-		this.instrutorDTO = instrutorDTO;
-	}
-
-	public AtividadeDTO getAtividadeDTO() {
-		return atividadeDTO;
-	}
-
-	public void setAtividadeDTO(AtividadeDTO atividadeDTO) {
-		this.atividadeDTO = atividadeDTO;
-	}
-
-	public Integer getIdTurma() {
-		return idTurma;
-	}
-
-	public void setIdTurma(Integer idTurma) {
-		this.idTurma = idTurma;
+	public void setTurmaId(Integer turmaId) {
+		this.turmaId = turmaId;
 	}
 
 	public Date getHorarioTurma() {
@@ -70,9 +51,17 @@ public class TurmaDTO {
 		this.dataFim = dataFim;
 	}
 
+	public InstrutorDTO getInstrutorDTO() {
+		return instrutorDTO;
+	}
+
+	public void setInstrutorDTO(InstrutorDTO instrutorDTO) {
+		this.instrutorDTO = instrutorDTO;
+	}
+
 	@Override
 	public String toString() {
-		return "TurmaDTO [idTurma=" + idTurma + ", horarioTurma=" + horarioTurma + ", duracaoTurma=" + duracaoTurma
+		return "TurmaDTO [turmaId=" + turmaId + ", horarioTurma=" + horarioTurma + ", duracaoTurma=" + duracaoTurma
 				+ ", dataInicio=" + dataInicio + ", dataFim=" + dataFim + "]";
 	}
 

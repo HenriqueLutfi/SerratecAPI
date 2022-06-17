@@ -7,29 +7,28 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "atividade")
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "atividadeId")
 public class Atividade {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_atividade")
 	private Integer atividadeId;
-
-	@Column(name = "nome")
+	
+	@Column(name ="nome")
 	private String nomeAtividade;
 
 	@OneToMany(mappedBy = "atividade")
-	@JsonIgnore
-//	@JsonManagedReference
-	private List<Turma> turmaList;
+//	@JsonIgnore
+	private List<Turma> TurmaList;
 
 	public Integer getAtividadeId() {
 		return atividadeId;
@@ -48,11 +47,15 @@ public class Atividade {
 	}
 
 	public List<Turma> getTurmaList() {
-		return turmaList;
+		return TurmaList;
 	}
 
 	public void setTurmaList(List<Turma> turmaList) {
-		this.turmaList = turmaList;
+		TurmaList = turmaList;
 	}
 
+	
+	
+	
+	
 }

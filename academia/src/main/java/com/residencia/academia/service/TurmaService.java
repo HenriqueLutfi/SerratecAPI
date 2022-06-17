@@ -5,20 +5,18 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.residencia.academia.DTO.InstrutorDTO;
-import com.residencia.academia.DTO.TurmaDTO;
+import com.residencia.academia.dto.InstrutorDTO;
+import com.residencia.academia.dto.TurmaDTO;
 import com.residencia.academia.entity.Instrutor;
 import com.residencia.academia.entity.Turma;
 import com.residencia.academia.repository.TurmaRepository;
 
 @Service
 public class TurmaService {
+	
 	@Autowired
 	TurmaRepository turmaRepository;
-	
-	@Autowired
-	private AtividadeService atividadeService;
-	
+
 	@Autowired
 	InstrutorService instrutorService;
 
@@ -26,73 +24,58 @@ public class TurmaService {
 		return turmaRepository.findAll();
 	}
 
-	public Turma findByTurmaId(Integer id) {
+	public Turma findTurmaById(Integer id) {
 		return turmaRepository.findById(id).isPresent() ? turmaRepository.findById(id).get() : null;
-	}
-
-	public TurmaDTO findByTurmaDTOId(Integer id) {
-		Turma turma = turmaRepository.findById(id).isPresent() ? turmaRepository.findById(id).get() : null;
-		TurmaDTO turmaDTO = new TurmaDTO();
-		if (null != turma) {
-			turmaDTO = converterEntidadeParaDTO(turma);
-		}
-		return turmaDTO;
 	}
 
 	public Turma saveTurma(Turma turma) {
 		return turmaRepository.save(turma);
 	}
 
-	public TurmaDTO saveTurmaDTO(TurmaDTO turmaDTO) {
-		Turma turma = new Turma();
-		turma = converterDTOParaEntidade(turmaDTO);
-//		Instrutor instrutor = instrutorService.findInstrutorById(turmaDTO.getInstrutorDTO().getIdInstrutor());
-//		turma.setInstrutor(instrutor);
-		saveTurma(turma);
-		turmaDTO = converterEntidadeParaDTO(turma);
-		return turmaDTO;
+	public TurmaDTO saveTurmaDTO(TurmaDTO TurmaDTO) {
+		Turma turma = convertDtoToEntity(TurmaDTO);
+
+		Turma turmaNovo = turmaRepository.save(turma);
+
+		return convertEntityToDto(turmaNovo);
 	}
 
 	public Turma updateTurma(Turma turma) {
 		return turmaRepository.save(turma);
 	}
 
-	public void deleteById(Integer id) {
+	public void deleteTurma(Integer id) {
 		turmaRepository.deleteById(id);
 	}
 
-	private TurmaDTO converterEntidadeParaDTO(Turma turma) {
+	private TurmaDTO convertEntityToDto(Turma turma) {
 		TurmaDTO turmaDTO = new TurmaDTO();
 		turmaDTO.setDataFim(turma.getDataFim());
 		turmaDTO.setDataInicio(turma.getDataInicio());
 		turmaDTO.setDuracaoTurma(turma.getDuracaoTurma());
 		turmaDTO.setHorarioTurma(turma.getHorarioTurma());
-		turmaDTO.setIdTurma(turma.getIdTurma());
-		InstrutorDTO instrutor = instrutorService.findInstrutorDTOById(turma.getInstrutor().getIdInstrutor());
-		//turmaDTO.setInstrutorDTO(instrutorService.converterEntidadeParaDTO(turma.getInstrutor()));
+		turmaDTO.setTurmaId(turma.getTurmaId());
+
+		InstrutorDTO instrutor = instrutorService.findInstrutorDTOById(turma.getInstrutor().getInstrutorId());
 		turmaDTO.setInstrutorDTO(instrutor);
-		//turmaDTO.setAtividadeDTO(turma.getAtividade());
+
 		return turmaDTO;
 	}
 
-	private Turma converterDTOParaEntidade(TurmaDTO turmaDTO) {
+	private Turma convertDtoToEntity(TurmaDTO turmaDTO) {
 		Turma turma = new Turma();
 		turma.setDataFim(turmaDTO.getDataFim());
 		turma.setDataInicio(turmaDTO.getDataInicio());
 		turma.setDuracaoTurma(turmaDTO.getDuracaoTurma());
 		turma.setHorarioTurma(turmaDTO.getHorarioTurma());
-		turma.setIdTurma(turmaDTO.getIdTurma());
-		//turma.setInstrutor(instrutorService.converterDTOParaEntidade(turmaDTO.getInstrutorDTO()));
-		Instrutor instrutor = instrutorService.findInstrutorById(turmaDTO.getInstrutorDTO().getIdInstrutor());
+		turma.setTurmaId(turmaDTO.getTurmaId());
+		Instrutor instrutor = instrutorService.findInstrutorById(turmaDTO.getInstrutorDTO().getInstrutorId());
 		turma.setInstrutor(instrutor);
-		//turma.setAtividade(turmaDTO.getAtividadeDTO());
-		return turma;
-	}
 
-	/*
-	 * public Boolean deleteTurmaComConferencia(Integer id) {
-	 * if(turmaRepository.findById(id).isPresent()) {
-	 * turmaRepository.deleteById(id); return true; }else { return false; } }
-	 */
+		Turma turmaNovo = turmaRepository.save(turma);
+
+		return turmaNovo;
+	}
+	
 
 }

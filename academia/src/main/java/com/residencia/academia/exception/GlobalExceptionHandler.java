@@ -1,5 +1,8 @@
 package com.residencia.academia.exception;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +19,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	public ResponseEntity<Object> handleNoSuchElementFoundException(NoSuchElementFoundException itemNotFoundException,
 			WebRequest request) {
 		return buildErrorResponse(itemNotFoundException, HttpStatus.NOT_FOUND, request);
+	}
+	
+	@ExceptionHandler(CpfException.class)
+	public final ResponseEntity<Object> handleUserNotFoundException(CpfException ex, WebRequest request) {
+		List<String> details = new ArrayList<>();
+		details.add(ex.getLocalizedMessage());
+		HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+		ErrorResponse error = new ErrorResponse(httpStatus.value(), "Registro ja cadastrado", details);
+		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler(Exception.class)
@@ -37,6 +49,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	@Override
 	public ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,
 			HttpStatus status, WebRequest request) {
+
 		return buildErrorResponse(ex, status, request);
 	}
 }

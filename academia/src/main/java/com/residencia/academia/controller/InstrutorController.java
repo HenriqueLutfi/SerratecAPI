@@ -14,84 +14,89 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.residencia.academia.DTO.InstrutorDTO;
+import com.residencia.academia.dto.InstrutorDTO;
 import com.residencia.academia.entity.Instrutor;
+
 import com.residencia.academia.service.InstrutorService;
+
 
 @RestController
 @RequestMapping("/instrutor")
 public class InstrutorController {
+	
 	@Autowired
-	InstrutorService instrutorService;
-
+	private InstrutorService instrutorService;
+	
 	@GetMapping
-	public ResponseEntity<List<Instrutor>> findAllInstrutor() {
-		List<Instrutor> instrutorList = instrutorService.findAllInstrutor();
+	public ResponseEntity<List<Instrutor>> findAllInstrutor(){
+		List<Instrutor> instrutorList =instrutorService.findAllInstrutor();
 //		return ResponseEntity.ok().body(instrutorList);
 		return new ResponseEntity<>(instrutorList, HttpStatus.OK);
-	}
-
-	@GetMapping("/dto/{id}")
-	public ResponseEntity<InstrutorDTO> findInstrutorDTOById(@PathVariable Integer id) {
-		InstrutorDTO instrutorDTO = instrutorService.findInstrutorDTOById(id);
-		if(null==instrutorDTO) {
-			return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
-		}else {
-			return new ResponseEntity<>(instrutorDTO, HttpStatus.OK);// para corrigir a mensagem pelo codigo
-		}
+		
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Instrutor> findInstrutorById(@PathVariable Integer id) {
-//		return instrutorService.findInstrutorById(id);
-		// return new ResponseEntity<>(instrutorService.findInstrutorById(id),
-		// HttpStatus.OK);
+		//return new ResponseEntity<>(instrutorService.findInstrutorById(id), HttpStatus.OK);
 		Instrutor instrutor = instrutorService.findInstrutorById(id);
-		if(null==instrutor) {
-			return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
-		}else {
-			return new ResponseEntity<>(instrutor, HttpStatus.OK);// para corrigir a mensagem pelo codigo
+		if (null == instrutor) {
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		} else {
+		return new ResponseEntity<>(instrutor, HttpStatus.OK);
 		}
 	}
+	
+	@GetMapping("/dto/{id}")
+	public ResponseEntity<InstrutorDTO> findInstrutorDTOById(@PathVariable Integer id) {
+		//return new ResponseEntity<>(instrutorService.findInstrutorById(id), HttpStatus.OK);
+		InstrutorDTO instrutorDTO = instrutorService.findInstrutorDTOById(id);
+//		if (null == instrutorDTO) {
+//			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+//		} else {
+		return new ResponseEntity<>(instrutorDTO, HttpStatus.OK);
+		}
+	
+	
+	
+	
+	 @PostMapping
+	    public ResponseEntity <Instrutor> saveInstrutor(@RequestBody Instrutor instrutor){
+		 Instrutor novoInstrutor = instrutorService.saveInstrutor(instrutor);
+		 	
+	        return new ResponseEntity<>(novoInstrutor, HttpStatus.CREATED);
+	    }
+	 
+	 @PostMapping("/post-dto")
+	    public ResponseEntity <InstrutorDTO> saveInstrutorDTO(@RequestBody InstrutorDTO instrutorDTO){
+		 InstrutorDTO novoInstrutorDTO = instrutorService.saveInstrutorDTO(instrutorDTO);
+		 
+		 
+	        return new ResponseEntity<>(novoInstrutorDTO, HttpStatus.CREATED);
+	    }
+	 
+//	 @PostMapping("/post-dto")
+//	 public ResponseEntity<Instrutor> salvar(@RequestBody InstrutorDTO dto) {
+//	     Instrutor instrutor = instrutorService.saveInstrutor(dto.transformObject());
+//	     return new ResponseEntity<>(instrutor, HttpStatus.CREATED);
+//	 }
 
-//	@PostMapping
-//	public Instrutor save(@RequestBody Instrutor instrutor) {
-//		return instrutorService.saveInstrutor(instrutor);
-//	}
+	    @PutMapping
 
-	@PostMapping("/dto")
-	public ResponseEntity<InstrutorDTO> saveInstrutorDTO(@RequestBody InstrutorDTO instrutorDTO) {
-		InstrutorDTO novoInstrutorDTO = instrutorService.saveInstrutorDTO(instrutorDTO);
-		return new ResponseEntity<>(novoInstrutorDTO,HttpStatus.CREATED);
-	}
-	
-	@PostMapping
-	public ResponseEntity<Instrutor> saveInstrutor(@RequestBody Instrutor instrutor) {
-		//return instrutorService.saveInstrutor(instrutor);
-		Instrutor novoIinstrutor = instrutorService.saveInstrutor(instrutor);
-		return new ResponseEntity<>(novoIinstrutor,HttpStatus.CREATED);
-	}
-	
-	@PutMapping
-	public ResponseEntity<Instrutor> updateInstrutor(@RequestBody Instrutor instrutor) {
-		//return instrutorService.saveInstrutor(instrutor);
-		Instrutor novoIinstrutor = instrutorService.updateInstrutor(instrutor);
-		return new ResponseEntity<>(novoIinstrutor,HttpStatus.OK);
-	}
+	    public ResponseEntity<Instrutor> updateInstrutor (@RequestBody Instrutor instrutor){
+	    	Instrutor novoInstrutor = instrutorService.updateInstrutor(instrutor);
+	    	return new ResponseEntity<>(instrutor, HttpStatus.OK);
+	    }
+//	    public Instrutor update(@PathVariable(value = "id") Integer id, @RequestBody Instrutor instrutor) {
+//	    	return instrutorService.saveInstrutor(instrutor);
+//	    }
+//	    
+	    @DeleteMapping("/{id}")
+	    public void delete(@PathVariable (value = "id") Integer Id){
+	       instrutorService.deleteInstrutor(Id);
+	    }
+	    public ResponseEntity<String> deleteInstrutor(@PathVariable Integer id){
+	    	instrutorService.deleteInstrutor(id);
+	    	return new ResponseEntity<>("", HttpStatus.OK);
+	    }
 
-//	@DeleteMapping("/{id}")
-//	public void delete(@PathVariable Integer id) {
-//		instrutorService.deleteInstrutor(id);
-//	}
-	
-	@DeleteMapping("/{id}")
-	public ResponseEntity<String> delete(@PathVariable Integer id) {
-		instrutorService.deleteInstrutor(id);
-		return new ResponseEntity<>("",HttpStatus.OK);
-	}
-	
-	public ResponseEntity<String> deleteInstrutor(@PathVariable Integer id){
-    	instrutorService.deleteInstrutor(id);
-    	return new ResponseEntity<>("", HttpStatus.OK);
-    }
 }

@@ -1,31 +1,28 @@
-package com.residencia.academia.DTO;
+package com.residencia.academia.dto;
 
 import java.util.Date;
 import java.util.List;
 
+import com.residencia.academia.entity.Instrutor;
+
 public class InstrutorDTO {
 
-	private Integer idInstrutor;
+	private Integer instrutorId;
 	private Integer rg;
 	private String nomeInstrutor;
 	private Date dataNascimento;
-	private Integer titulacao;
+	private Integer titulacaoInstrutor;
 	private List<TurmaDTO> turmaDTOList;
+	
+	
 
-	public List<TurmaDTO> getTurmaDTOList() {
-		return turmaDTOList;
+	
+	public Integer getInstrutorId() {
+		return instrutorId;
 	}
 
-	public void setTurmaDTOList(List<TurmaDTO> turmaDTOList) {
-		this.turmaDTOList = turmaDTOList;
-	}
-
-	public Integer getIdInstrutor() {
-		return idInstrutor;
-	}
-
-	public void setIdInstrutor(Integer idInstrutor) {
-		this.idInstrutor = idInstrutor;
+	public void setInstrutorId(Integer instrutorId) {
+		this.instrutorId = instrutorId;
 	}
 
 	public Integer getRg() {
@@ -52,18 +49,29 @@ public class InstrutorDTO {
 		this.dataNascimento = dataNascimento;
 	}
 
-	public Integer getTitulacao() {
-		return titulacao;
+	public Integer getTitulacaoInstrutor() {
+		return titulacaoInstrutor;
 	}
 
-	public void setTitulacao(Integer titulacao) {
-		this.titulacao = titulacao;
+	public void setTitulacaoInstrutor(Integer titulacaoInstrutor) {
+		this.titulacaoInstrutor = titulacaoInstrutor;
+	}
+
+	public List<TurmaDTO> getTurmaDTOList() {
+		return turmaDTOList;
+	}
+
+	public void setTurmaDTOList(List<TurmaDTO> turmaDTOList) {
+		this.turmaDTOList = turmaDTOList;
 	}
 
 	@Override
 	public String toString() {
-		return "InstrutorDTO [idInstrutor=" + idInstrutor + ", rg=" + rg + ", nomeInstrutor=" + nomeInstrutor
-				+ ", dataNascimento=" + dataNascimento + ", titulacao=" + titulacao + "]";
+		return "InstrutorDTO [instrutorId=" + instrutorId + ", rg=" + rg + ", nomeInstrutor=" + nomeInstrutor
+				+ ", dataNascimento=" + dataNascimento + ", titulacaoInstrutor=" + titulacaoInstrutor
+				+ ", turmaDTOList=" + turmaDTOList + "]";
 	}
+
+	
 
 }
